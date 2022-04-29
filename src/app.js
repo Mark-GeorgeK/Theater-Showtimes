@@ -6,7 +6,7 @@ fetch('http://localhost:8000/')
     .then(res => res.json())
     .then(data => {
         //header
-        const header = `<div class="header"><p>This is a header</p></div>`;
+        const header = `<div class="header"><span class="logo">MoviesHub</span><span class="Buy">Buy</span></div>`;
         headerDiv.insertAdjacentHTML('beforeend', header);
         data.forEach(cinema => {
             let cinemaHTML = '<div class="cinemas">';

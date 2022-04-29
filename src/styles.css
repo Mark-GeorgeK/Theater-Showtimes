@@ -29,12 +29,25 @@ li {
     margin-top: 0em;
 }
 
+/* make header responsive */
 .header {
     background-color: black;
+    margin-top: 0px;
+    height: 4em;
 }
 
-.header p {
-    margin-top: 0px;
+.logo {
+    font-size: xx-large;
+    float: left;
+    padding-top: 0.5em;
+    padding-left: 5em;
+}
+
+.Buy{
+    font-size: large;
+    float: right;
+    padding-right: 9em;
+    padding-top: 1.4em;
 }
 
 .footer {
@@ -43,4 +56,5 @@ li {
 
 .footer p {
     margin-bottom: 0px;
+    height: 10em;
 }
