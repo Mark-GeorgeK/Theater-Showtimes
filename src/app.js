@@ -4,11 +4,11 @@ fetch('http://localhost:8000/')
     .then(res => res.json())
     .then(data => {
         // console.log(data);
-        data.forEach(element => {
-            const Cinema = `<h2>${element.Cinema}</h2>`;
+        data.forEach(cinema => {
+            const Cinema = `<h2>${cinema.cinemaName}</h2>`;
             let Movies = '<ul>';
-            element.Movies.forEach(movie => {
-                Movies += `<li>${movie}</li>`;
+            cinema.Movies.forEach(movie => {
+                Movies += `<li><img src=${movie.movieImage} /><p>${movie.movieName}</p></li>`;
             });
             Movies += `</ul><hr>`;
             dataDiv.insertAdjacentHTML('beforeend', Cinema + Movies);

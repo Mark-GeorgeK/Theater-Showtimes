@@ -13,5 +13,15 @@
     "cheerio": "^1.0.0-rc.10",
     "cors": "^2.8.5",
     "express": "^4.18.0"
-  }
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mark-GeorgeK/Theater-Showtimes.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/Mark-GeorgeK/Theater-Showtimes/issues"
+  },
+  "homepage": "https://github.com/Mark-GeorgeK/Theater-Showtimes#readme"
 }

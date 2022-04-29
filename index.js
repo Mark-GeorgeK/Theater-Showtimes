@@ -15,7 +15,7 @@ const Cinemas = [];
 async function getCinemaData(cinemaName, cinemaURL) {
     let ERROR = false;
     //if in file don't request..
-    
+
     //if in whereToLookFor
     if (!(whereToLookFor.find((el) => el == cinemaName))) return;
     const response = await axios(cinemaURL).catch(err => {
@@ -35,11 +35,15 @@ async function getCinemaData(cinemaName, cinemaURL) {
     const $ = cheerio.load(HTML);
     const MovieElements = $('#theater-showtimes-container', HTML);
     $('.row', MovieElements).each(function () {
-        let Movie = $(this);
-        const movieName = $('.unstyled', Movie).find('h3').find('a').text();
-        if (movieName) Movies.push(movieName);
+        let MovieElement = $(this);
+        const movieName = $('.unstyled', MovieElement).find('h3').find('a').text();
+        const img = MovieElement.find('img');
+        let movieImage;
+        if (img) movieImage = img.attr('data-src');
+        const Movie = { movieName, movieImage };
+        if (movieName) Movies.push(Movie);
     })
-    const Cinema = { 'Cinema': cinemaName, 'URL': cinemaURL, Movies };
+    const Cinema = { cinemaName, cinemaURL, Movies };
     // console.log(Cinema);
     Cinemas.push(Cinema);
 }

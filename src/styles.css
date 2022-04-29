@@ -1,4 +1,19 @@
+ul {
+    display: flex;
+    flex-wrap: wrap;
+    list-style-type: none;
+}
+
 li {
+
     font-family: monospace;
     font-style: oblique;
+    padding-right: 1cm;
+}
+
+p {
+    font-size: large;
+    text-align: center;
+    max-width: 150px;
+    margin-top: 0em;
 }
