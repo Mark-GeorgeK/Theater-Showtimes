@@ -1,21 +1,26 @@
+const headerDiv = document.querySelector('#header');
 const dataDiv = document.querySelector('#data');
+const footerDiv = document.querySelector('#footer');
 
 fetch('http://localhost:8000/')
     .then(res => res.json())
     .then(data => {
-        // console.log(data);
+        //header
+        const header = `<div class="header"><p>This is a header</p></div>`;
+        headerDiv.insertAdjacentHTML('beforeend', header);
         data.forEach(cinema => {
-            //header
             let cinemaHTML = '<div class="cinemas">';
-            const Cinema = `<h2>${cinema.cinemaName}</h2>`;
+            const Cinema = `<div><p class="CinemaName">${cinema.cinemaName}</p></div>`;
             let Movies = '<ul>';
             cinema.Movies.forEach(movie => {
-                Movies += `<li><img src=${movie.movieImage} /><p>${movie.movieName}</p></li>`;
+                Movies += `<li><img src=${movie.movieImage} /><p class="MovieName">${movie.movieName}</p></li>`;
             });
-            Movies += `</ul><hr>`;
+            Movies += `</ul>`;
             cinemaHTML += Cinema + Movies + '</div>';
-            //footer
             dataDiv.insertAdjacentHTML('beforeend', cinemaHTML);
         })
+        //footer
+        const footer = `<div class="footer"><p>This is a footer</p></div>`;
+        footerDiv.insertAdjacentHTML('beforeend', footer);
     })
     .catch(err => console.log(err));

@@ -1,19 +1,46 @@
+body {
+    background-color: #262729;
+    color: white;
+    text-align: center;
+    margin: 0%;
+}
+
 ul {
     display: flex;
     flex-wrap: wrap;
     list-style-type: none;
+    justify-content: center;
 }
 
 li {
-
-    font-family: monospace;
-    font-style: oblique;
     padding-right: 1cm;
 }
 
-p {
-    font-size: large;
-    text-align: center;
+.CinemaName {
+    font-size: xx-large;
+    font-family: Garamond !important;
+}
+
+.MovieName {
+    font-size: small;
+    font-family: 'Papyrus';
+    font-style: oblique;
     max-width: 150px;
     margin-top: 0em;
+}
+
+.header {
+    background-color: black;
+}
+
+.header p {
+    margin-top: 0px;
+}
+
+.footer {
+    background-color: black;
+}
+
+.footer p {
+    margin-bottom: 0px;
 }
