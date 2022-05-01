@@ -17,7 +17,7 @@ async function getCinemaData(cinemaName, cinemaURL) {
     //if in file don't request..
 
     //if in whereToLookFor
-    if (!(whereToLookFor.find((el) => el == cinemaName))) return;
+    if (!(whereToLookFor.find(cinema => cinema == cinemaName))) return;
     const response = await axios(cinemaURL).catch(err => {
         ERROR = true; //check behavior
         // if (err.response.status != 503) {
@@ -49,9 +49,9 @@ async function getCinemaData(cinemaName, cinemaURL) {
 }
 
 //adjust asynchronicity
-async function getHTML(url) {
+async function getCinemas(url) {
     //catching errors in async/await?
-    const response = await axios(url).catch(err => console.log(err));
+    const response = await axios(url).catch(err => console.log(`Error on ${url}`));
     if (response == undefined) //check
         return 'Site can not be accessed at the moment.';
     const HTML = response.data;
@@ -65,7 +65,7 @@ async function getHTML(url) {
 }
 
 async function runner() {
-    await getHTML();
+    await getCinemas();
     console.log(Cinemas);
 }
 
@@ -76,11 +76,12 @@ app.get('/', function (req, res) {
     res.json(Cinemas); //already setuped up while booting server
 });
 
-for (let i = 1; i <= 4; i++) {
+//handle variable page number problem with server overloading in mind
+for (let i = 1; i <= 8; i++) {
     // console.log(CinemasURL + i);
-    getHTML(CinemasURL + i);
+    getCinemas(CinemasURL + i);
 }
 
-// getHTML();
+// getCinemas();
 // runner(); //why not working
 app.listen(PORT, () => console.log('server is running..'));
