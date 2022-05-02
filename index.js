@@ -36,21 +36,39 @@ async function getCinemaData(cinemaName, cinemaURL) {
     const MovieElements = $('#theater-showtimes-container', HTML);
     $('.row', MovieElements).each(function () {
         let MovieElement = $(this);
-        const movieName = $('.unstyled', MovieElement).find('h3').find('a').text();
-        const img = MovieElement.find('img');
+        const movieDetails = $('.unstyled', MovieElement);
+
+        const movieName = movieDetails.find('h3').text().trim();
+
         let movieImage;
+        const img = MovieElement.find('img');
         if (img) movieImage = img.attr('data-src');
-        const Movie = { movieName, movieImage };
+
+        const IMDBRating = $('.legend', movieDetails).text();
+        const AgeRating = $('.censorship', movieDetails).find('li').eq(1).text();
+        const Language = movieDetails.find('ul').eq(3).find('li').eq(1).text().trim();
+
+        const Genre = [];
+        movieDetails.find('ul').eq(4).find('li').each(function () { Genre.push($(this).text().trim()) });
+
+        let Description = "";
+        movieDetails.find('div').find('p').each(function () { if ($(this).text()) Description += ($(this).text()) });
+
+        const showtimesPrices = [];
+        $('.showtimes', movieDetails).find('td').each(function () {
+            const str = $(this).text().trim().replace('\n', '').replace(/\s/g, '');
+            if (str && !str.startsWith('More')) showtimesPrices.push(str);
+        });
+
+        const Movie = { movieName, movieImage, IMDBRating, AgeRating, Language, Genre, Description, showtimesPrices };
         if (movieName) Movies.push(Movie);
-    })
+    });
     const Cinema = { cinemaName, cinemaURL, Movies };
-    // console.log(Cinema);
     Cinemas.push(Cinema);
 }
 
 //adjust asynchronicity
 async function getCinemas(url) {
-    //catching errors in async/await?
     const response = await axios(url).catch(err => console.log(`Error on ${url}`));
     if (response == undefined) //check
         return 'Site can not be accessed at the moment.';

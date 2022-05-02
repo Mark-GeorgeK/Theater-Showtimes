@@ -9,6 +9,7 @@ fetch('http://localhost:8000/')
         const header = `<div class="header"><span class="logo">MoviesHub</span><span class="Buy">Buy</span></div>`;
         headerDiv.insertAdjacentHTML('beforeend', header);
         data.forEach(cinema => {
+            console.log(cinema.Movies);
             let cinemaHTML = '<div class="cinemas">';
             const Cinema = `<div><p class="CinemaName">${cinema.cinemaName}</p></div>`;
             let Movies = '<ul>';
@@ -16,7 +17,7 @@ fetch('http://localhost:8000/')
                 Movies += `<li><img src=${movie.movieImage} /><p class="MovieName">${movie.movieName}</p></li>`;
             });
             Movies += `</ul>`;
-            cinemaHTML += Cinema + Movies + '</div>';
+            cinemaHTML += Cinema + Movies + '<hr noshade width=15%></div>';
             dataDiv.insertAdjacentHTML('beforeend', cinemaHTML);
         })
         //footer
