@@ -40,7 +40,7 @@ li {
     font-size: xx-large;
     float: left;
     padding-top: 0.5em;
-    padding-left: 5em;
+    margin-left: 5em;
 }
 
 .Buy {

@@ -7,7 +7,7 @@ const app = express();
 app.use(cors());
 
 const movies = require('./routes/movies');
-app.use('/movies',movies);
+app.use('/movies', movies);
 
 const PORT = 8000;
 const URL = 'https://elcinema.com/en/theater/';
@@ -30,7 +30,7 @@ async function getCinema(cinemaName, cinemaURL) {
         //     return;
         // }
         // setTimeout(() => getCinema(cinemaName, cinemaURL), 5000);
-        // getCinema(cinemaName, cinemaURL); //check that work-around for server-overloading
+        getCinema(cinemaName, cinemaURL); //check that work-around for server-overloading
     });
     if (ERROR) return;
     // console.log(response.data);
@@ -73,7 +73,11 @@ async function getCinema(cinemaName, cinemaURL) {
 
 //adjust asynchronicity
 async function getCinemas(url) {
-    const response = await axios(url).catch(err => console.log(`Error on ${url}`));
+    const response = await axios(url).catch(err => {
+        console.log(`Error on ${url}`);
+        getCinemas(url); //check that workaround
+        return;
+    });
     if (response == undefined) //check
         return 'Site can not be accessed at the moment.';
     const HTML = response.data;
@@ -112,3 +116,5 @@ for (let i = 1; i <= 8; i++) {
 // getCinemas();
 // runner(); //why not working
 app.listen(PORT, () => console.log('server is running..'));
+
+exports.array = Cinemas;

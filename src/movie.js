@@ -8,10 +8,21 @@ fetch(`http://localhost:8000/movies/${dynamicURL}`)
     .then(res => res.json())
     .then(data => {
         //header
-        const header = `<div class="header"><span class="logo">MoviesHub</span><span class="Buy">Buy</span></div>`;
+        const header = `<div class="header"><a href="/"><span class="logo">MoviesHub</span></a><span class="Buy">Buy</span></div>`;
         headerDiv.insertAdjacentHTML('beforeend', header);
         //data
-        dataDiv.insertAdjacentHTML("beforeend", `<p>${data}</p>`)
+        let html = `<div class="movieDetails">
+        <p style="font-size:xx-large">${data.movieName}</p>
+        <img src="${data.movieImage}" style="justify-content:left"/>
+        <div><p>IMDB Rating:${data.IMDBRating}</p>
+        <p>Age: ${data.AgeRating}</p></div>
+        <p>Language: ${data.Language}</p>
+        <p>Genre: ${data.Genre}</p>
+        <p class="description">Description: ${data.Description}</p>
+        <div>Showtimes: ${data.showtimesPrices}</div>`;
+        // data.showtimesPrices.forEach(el => html += `<div>${el}</div>`);
+        // html += `</div>`;
+        dataDiv.insertAdjacentHTML("beforeend", html);
         //footer
         const footer = `<div class="footer"><p>This is a footer</p></div>`;
         footerDiv.insertAdjacentHTML('beforeend', footer);
