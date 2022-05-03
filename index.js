@@ -1,10 +1,14 @@
 const express = require('express');
+const cors = require('cors');
 const axios = require('axios');
 const cheerio = require('cheerio');
-const cors = require('cors');
 
 const app = express();
 app.use(cors());
+
+const movies = require('./routes/movies');
+app.use('/movies',movies);
+
 const PORT = 8000;
 const URL = 'https://elcinema.com/en/theater/';
 const CinemasURL = 'https://elcinema.com/en/theater/1/?order=rating&page='
@@ -12,7 +16,7 @@ const whereToLookFor = ['Point 90 Cinema', 'Sun City Cinema', 'Vox Mall of Egypt
     'City Stars Cinema', 'Vox City Centre Almaza Cinema'];
 const Cinemas = [];
 
-async function getCinemaData(cinemaName, cinemaURL) {
+async function getCinema(cinemaName, cinemaURL) {
     let ERROR = false;
     //if in file don't request..
 
@@ -25,8 +29,8 @@ async function getCinemaData(cinemaName, cinemaURL) {
         console.log(`${cinemaURL}`);
         //     return;
         // }
-        // setTimeout(() => getCinemaData(cinemaName, cinemaURL), 5000);
-        // getCinemaData(cinemaName, cinemaURL); //check that work-around for server-overloading
+        // setTimeout(() => getCinema(cinemaName, cinemaURL), 5000);
+        // getCinema(cinemaName, cinemaURL); //check that work-around for server-overloading
     });
     if (ERROR) return;
     // console.log(response.data);
@@ -78,7 +82,7 @@ async function getCinemas(url) {
         let cinemaURL = $(this).find('a').eq(1).attr('href');
         let cinemaName = $(this).find('a').eq(1).text();
         cinemaURL = cinemaURL.split('/')[3];
-        getCinemaData(cinemaName, URL + cinemaURL);
+        getCinema(cinemaName, URL + cinemaURL);
     })
 }
 
@@ -93,6 +97,11 @@ app.get('/', function (req, res) {
     // console.log(Cinemas);
     res.json(Cinemas); //already setuped up while booting server
 });
+
+// app.get('/movies/:cinemaName/:movieName', function (req, res) {
+//     const str = 'requested ' + req.params.cinemaName + '/' + req.params.movieName;
+//     res.json(str);
+// });
 
 //handle variable page number problem with server overloading in mind
 for (let i = 1; i <= 8; i++) {

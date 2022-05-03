@@ -2,6 +2,10 @@ const headerDiv = document.querySelector('#header');
 const dataDiv = document.querySelector('#data');
 const footerDiv = document.querySelector('#footer');
 
+function saveURL(dynamicURL) {
+    sessionStorage.setItem('dynamicURL', dynamicURL);
+}
+
 fetch('http://localhost:8000/')
     .then(res => res.json())
     .then(data => {
@@ -14,7 +18,8 @@ fetch('http://localhost:8000/')
             const Cinema = `<div><p class="CinemaName">${cinema.cinemaName}</p></div>`;
             let Movies = '<ul>';
             cinema.Movies.forEach(movie => {
-                Movies += `<li><img src=${movie.movieImage} /><p class="MovieName">${movie.movieName}</p></li>`;
+                const dynamicURL = cinema.cinemaName + '/' + movie.movieName;
+                Movies += `<li><a href="/src/movie.html" onclick="saveURL('${dynamicURL}')"><img src=${movie.movieImage} /><p class="MovieName">${movie.movieName}</p></a></li>`;
             });
             Movies += `</ul>`;
             cinemaHTML += Cinema + Movies + '<hr noshade width=15%></div>';

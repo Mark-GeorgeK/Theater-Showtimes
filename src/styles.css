@@ -43,7 +43,7 @@ li {
     padding-left: 5em;
 }
 
-.Buy{
+.Buy {
     font-size: large;
     float: right;
     padding-right: 9em;
@@ -57,4 +57,9 @@ li {
 .footer p {
     margin-bottom: 0px;
     height: 10em;
+}
+
+a {
+    text-decoration: none;
+    color: white;
 }
