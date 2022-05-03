@@ -25,8 +25,8 @@ async function getCinema(cinemaName, cinemaURL) {
     const response = await axios(cinemaURL).catch(err => {
         ERROR = true; //check behavior
         // if (err.response.status != 503) {
-        console.log(`${err.response.status}: ${err.code} - ${err.response.statusText} @`);
-        console.log(`${cinemaURL}`);
+        // console.log(`${err.response.status}: ${err.code} - ${err.response.statusText} @`);
+        // console.log(`${cinemaURL}`);
         //     return;
         // }
         // setTimeout(() => getCinema(cinemaName, cinemaURL), 5000);
@@ -73,11 +73,13 @@ async function getCinema(cinemaName, cinemaURL) {
 
 //adjust asynchronicity
 async function getCinemas(url) {
+    let ERROR = false;
     const response = await axios(url).catch(err => {
-        console.log(`Error on ${url}`);
+        // console.log(`Error on ${url}`);
         getCinemas(url); //check that workaround
-        return;
+        ERROR = true; //check
     });
+    if(ERROR) return;
     if (response == undefined) //check
         return 'Site can not be accessed at the moment.';
     const HTML = response.data;
