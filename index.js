@@ -1,122 +1,34 @@
-const express = require('express');
-const cors = require('cors');
-const axios = require('axios');
-const cheerio = require('cheerio');
+const headerDiv = document.querySelector('#header');
+const dataDiv = document.querySelector('#data');
+const footerDiv = document.querySelector('#footer');
 
-const app = express();
-app.use(cors());
-
-const movies = require('./routes/movies');
-app.use('/movies', movies);
-
-const PORT = 8000;
-const URL = 'https://elcinema.com/en/theater/';
-const CinemasURL = 'https://elcinema.com/en/theater/1/?order=rating&page='
-const whereToLookFor = ['Point 90 Cinema', 'Sun City Cinema', 'Vox Mall of Egypt Cinema',
-    'City Stars Cinema', 'Vox City Centre Almaza Cinema'];
-const Cinemas = [];
-
-async function getCinema(cinemaName, cinemaURL) {
-    let ERROR = false;
-    //if in file don't request..
-
-    //if in whereToLookFor
-    if (!(whereToLookFor.find(cinema => cinema == cinemaName))) return;
-    const response = await axios(cinemaURL).catch(err => {
-        ERROR = true; //check behavior
-        // if (err.response.status != 503) {
-        // console.log(`${err.response.status}: ${err.code} - ${err.response.statusText} @`);
-        // console.log(`${cinemaURL}`);
-        //     return;
-        // }
-        // setTimeout(() => getCinema(cinemaName, cinemaURL), 5000);
-        getCinema(cinemaName, cinemaURL); //check that work-around for server-overloading
-    });
-    if (ERROR) return;
-    // console.log(response.data);
-    const HTML = response.data;
-    const Movies = [];
-    const $ = cheerio.load(HTML);
-    const MovieElements = $('#theater-showtimes-container', HTML);
-    $('.row', MovieElements).each(function () {
-        let MovieElement = $(this);
-        const movieDetails = $('.unstyled', MovieElement);
-
-        const movieName = movieDetails.find('h3').text().trim();
-
-        let movieImage;
-        const img = MovieElement.find('img');
-        if (img) movieImage = img.attr('data-src');
-
-        const IMDBRating = $('.legend', movieDetails).text();
-        const AgeRating = $('.censorship', movieDetails).find('li').eq(1).text();
-        const Language = movieDetails.find('ul').eq(3).find('li').eq(1).text().trim();
-
-        const Genre = [];
-        movieDetails.find('ul').eq(4).find('li').each(function () { Genre.push($(this).text().trim()) });
-
-        let Description = "";
-        movieDetails.find('div').find('p').each(function () { if ($(this).text()) Description += ($(this).text()) });
-
-        const showtimesPrices = [];
-        $('.showtimes', movieDetails).find('td').each(function () {
-            const str = $(this).text().trim().replace('\n', '').replace(/\s/g, '');
-            if (str && !str.startsWith('More')) showtimesPrices.push(str);
-        });
-
-        const Movie = { movieName, movieImage, IMDBRating, AgeRating, Language, Genre, Description, showtimesPrices };
-        if (movieName) Movies.push(Movie);
-    });
-    const Cinema = { cinemaName, cinemaURL, Movies };
-    Cinemas.push(Cinema);
+function saveURL(dynamicURL) {
+    sessionStorage.setItem('dynamicURL', dynamicURL);
 }
 
-//adjust asynchronicity
-async function getCinemas(url) {
-    let ERROR = false;
-    const response = await axios(url).catch(err => {
-        // console.log(`Error on ${url}`);
-        getCinemas(url); //check that workaround
-        ERROR = true; //check
-    });
-    if(ERROR) return;
-    if (response == undefined) //check
-        return 'Site can not be accessed at the moment.';
-    const HTML = response.data;
-    const $ = cheerio.load(HTML);
-    $('.jumbo-theater', HTML).each(function () {
-        let cinemaURL = $(this).find('a').eq(1).attr('href');
-        let cinemaName = $(this).find('a').eq(1).text();
-        cinemaURL = cinemaURL.split('/')[3];
-        getCinema(cinemaName, URL + cinemaURL);
+fetch('http://localhost:8000/')
+    .then(res => res.json())
+    .then(data => {
+        //header
+        const header = `<div class="header">
+                            <a href="/"><p class="logo">MoviesHub</p></a>
+                            <a href="/login"><p class="Login">Login</p></a></div>`;
+        headerDiv.insertAdjacentHTML('beforeend', header);
+        data.forEach(cinema => {
+            console.log(cinema.Movies);
+            let cinemaHTML = '<div class="cinemas">';
+            const Cinema = `<div><p class="CinemaName">${cinema.cinemaName}</p></div>`;
+            let Movies = '<ul>';
+            cinema.Movies.forEach(movie => {
+                const dynamicURL = cinema.cinemaName + '/' + movie.movieName;
+                Movies += `<li><a href="/movie" onclick="saveURL('${dynamicURL}')"><img src=${movie.movieImage} /><p class="MovieName">${movie.movieName}</p></a></li>`;
+            });
+            Movies += `</ul>`;
+            cinemaHTML += Cinema + Movies + '<hr noshade width=15%></div>';
+            dataDiv.insertAdjacentHTML('beforeend', cinemaHTML);
+        })
+        //footer
+        const footer = `<div class="footer"><p>This is a footer</p></div>`;
+        footerDiv.insertAdjacentHTML('beforeend', footer);
     })
-}
-
-async function runner() {
-    await getCinemas();
-    console.log(Cinemas);
-}
-
-app.get('/', function (req, res) {
-    // setTimeout(() => {
-    // }, 2000);
-    // console.log(Cinemas);
-    res.json(Cinemas); //already setuped up while booting server
-});
-
-// app.get('/movies/:cinemaName/:movieName', function (req, res) {
-//     const str = 'requested ' + req.params.cinemaName + '/' + req.params.movieName;
-//     res.json(str);
-// });
-
-//handle variable page number problem with server overloading in mind
-for (let i = 1; i <= 8; i++) {
-    // console.log(CinemasURL + i);
-    getCinemas(CinemasURL + i);
-}
-
-// getCinemas();
-// runner(); //why not working
-app.listen(PORT, () => console.log('server is running..'));
-
-exports.array = Cinemas;
+    .catch(err => console.log(err));

@@ -8,7 +8,9 @@ fetch(`http://localhost:8000/movies/${dynamicURL}`)
     .then(res => res.json())
     .then(data => {
         //header
-        const header = `<div class="header"><a href="/"><span class="logo">MoviesHub</span></a><span class="Buy">Buy</span></div>`;
+        const header = `<div class="header">
+                            <a href="/"><p class="logo">MoviesHub</p></a>
+                            <a href="/login"><p class="Login">Login</p></a></div>`;
         headerDiv.insertAdjacentHTML('beforeend', header);
         //data
         let html = `<div class="movieDetails">

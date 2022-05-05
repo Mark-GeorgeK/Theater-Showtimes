@@ -9,7 +9,7 @@ const router = express.Router();
 //handle not found get request?
 
 router.get('/:cinemaName/:movieName', function (req, res) {
-    const Cinemas = require('../index').array;
+    const Cinemas = require('../server').array;
     //get the requested movie details from Cinemas array (DB?)
     //search for it in array till DB is up and running
     let movieDetails;

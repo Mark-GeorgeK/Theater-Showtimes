@@ -33,21 +33,20 @@ li {
 .header {
     background-color: black;
     margin-top: 0px;
-    height: 4em;
+    height: 6em;
 }
 
 .logo {
     font-size: xx-large;
     float: left;
-    padding-top: 0.5em;
     margin-left: 5em;
 }
 
-.Buy {
+.Login {
     font-size: large;
     float: right;
     padding-right: 9em;
-    padding-top: 1.4em;
+    padding-top: 1.3em;
 }
 
 .footer {
