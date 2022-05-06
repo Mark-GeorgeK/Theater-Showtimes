@@ -13,17 +13,32 @@ fetch(`http://localhost:8000/movies/${dynamicURL}`)
                             <a href="/login"><p class="Login">Login</p></a></div>`;
         headerDiv.insertAdjacentHTML('beforeend', header);
         //data
-        let html = `<div class="movieDetails">
-        <p style="font-size:xx-large">${data.movieName}</p>
-        <img src="${data.movieImage}" style="justify-content:left"/>
-        <div><p>IMDB Rating:${data.IMDBRating}</p>
-        <p>Age: ${data.AgeRating}</p></div>
-        <p>Language: ${data.Language}</p>
-        <p>Genre: ${data.Genre}</p>
-        <p class="description">Description: ${data.Description}</p>
-        <div>Showtimes: ${data.showtimesPrices}</div>`;
-        // data.showtimesPrices.forEach(el => html += `<div>${el}</div>`);
-        // html += `</div>`;
+        const ShowtimesArray = [];
+        for (let i = 1; i < data.showtimesPrices.length; i += 2) {
+            const temp1 = data.showtimesPrices.at(i - 1);
+            const temp2 = data.showtimesPrices.at(i);
+            ShowtimesArray.push(`${temp1}, ${temp2}`)
+        }
+        let showtimesHTML = '';
+        ShowtimesArray.forEach(element => showtimesHTML += `<a href="#">${element}</a>`)
+        let html =
+            `<div>
+            <p style="font-size:xx-large">${data.movieName}</p>
+            <img src="${data.movieImage}" style="float:left;padding-left:15%"/>
+            <ul class="movieDetails">
+                <li>IMDB Rating:${data.IMDBRating}</li>
+                <li>Age: ${data.AgeRating}</li>
+                <li>Language: ${data.Language}</li>
+                <li>Genre: ${data.Genre}</li>
+                <li class="description">Description: ${data.Description}</li>
+                <li class="dropdown">
+                    <button class="dropbtn">Show-times</button>
+                    <div class="dropdown-content">
+                        ${showtimesHTML}
+                    </div>
+                </li>
+            </ul>
+        </div>`;
         dataDiv.insertAdjacentHTML("beforeend", html);
         //footer
         const footer = `<div class="footer"><p>This is a footer</p></div>`;
