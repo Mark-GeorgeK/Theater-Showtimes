@@ -1,15 +1,6 @@
-const express = require('express');
-const cors = require('cors');
 const axios = require('axios');
 const cheerio = require('cheerio');
 
-const app = express();
-app.use(cors());
-
-const movies = require('./routes/movies');
-app.use('/movies', movies);
-
-const PORT = 8000;
 const URL = 'https://elcinema.com/en/theater/';
 const CinemasURL = 'https://elcinema.com/en/theater/1/?order=rating&page='
 const whereToLookFor = ['Point 90 Cinema', 'Sun City Cinema', 'Vox Mall of Egypt Cinema',
@@ -18,22 +9,12 @@ const Cinemas = [];
 
 async function getCinema(cinemaName, cinemaURL) {
     let ERROR = false;
-    //if in file don't request..
-
-    //if in whereToLookFor
     if (!(whereToLookFor.find(cinema => cinema == cinemaName))) return;
     const response = await axios(cinemaURL).catch(err => {
-        ERROR = true; //check behavior
-        // if (err.response.status != 503) {
-        // console.log(`${err.response.status}: ${err.code} - ${err.response.statusText} @`);
-        // console.log(`${cinemaURL}`);
-        //     return;
-        // }
-        // setTimeout(() => getCinema(cinemaName, cinemaURL), 5000);
-        getCinema(cinemaName, cinemaURL); //check that work-around for server-overloading
+        ERROR = true;
+        getCinema(cinemaName, cinemaURL);
     });
     if (ERROR) return;
-    // console.log(response.data);
     const HTML = response.data;
     const Movies = [];
     const $ = cheerio.load(HTML);
@@ -71,16 +52,14 @@ async function getCinema(cinemaName, cinemaURL) {
     Cinemas.push(Cinema);
 }
 
-//adjust asynchronicity
 async function getCinemas(url) {
     let ERROR = false;
     const response = await axios(url).catch(err => {
-        // console.log(`Error on ${url}`);
-        getCinemas(url); //check that workaround
-        ERROR = true; //check
+        getCinemas(url);
+        ERROR = true;
     });
-    if(ERROR) return;
-    if (response == undefined) //check
+    if (ERROR) return;
+    if (response == undefined)
         return 'Site can not be accessed at the moment.';
     const HTML = response.data;
     const $ = cheerio.load(HTML);
@@ -92,31 +71,9 @@ async function getCinemas(url) {
     })
 }
 
-async function runner() {
-    await getCinemas();
-    console.log(Cinemas);
+function loadCinemas() {
+    for (let i = 1; i <= 8; i++)
+        getCinemas(CinemasURL + i);
 }
 
-app.get('/', function (req, res) {
-    // setTimeout(() => {
-    // }, 2000);
-    // console.log(Cinemas);
-    res.json(Cinemas); //already setuped up while booting server
-});
-
-// app.get('/movies/:cinemaName/:movieName', function (req, res) {
-//     const str = 'requested ' + req.params.cinemaName + '/' + req.params.movieName;
-//     res.json(str);
-// });
-
-//handle variable page number problem with server overloading in mind
-for (let i = 1; i <= 8; i++) {
-    // console.log(CinemasURL + i);
-    getCinemas(CinemasURL + i);
-}
-
-// getCinemas();
-// runner(); //why not working
-app.listen(PORT, () => console.log('server is running..'));
-
-exports.array = Cinemas;
+module.exports = { loadCinemas, Cinemas };

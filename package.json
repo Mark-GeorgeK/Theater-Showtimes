@@ -1,26 +1,33 @@
 {
-  "name": "web-scraper",
+  "name": "tutorial-youtube",
   "version": "1.0.0",
-  "description": "",
+  "description": "Building a login system with NodeJS",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon --exec babel-node src/server.js"
   },
-  "author": "",
+  "author": "hary pham",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.27.1",
+    "axios": "^0.27.2",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
     "cheerio": "^1.0.0-rc.10",
-    "cors": "^2.8.5",
-    "express": "^4.18.0"
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.5",
+    "dotenv": "^8.2.0",
+    "ejs": "^3.1.2",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "express-validator": "^6.5.0",
+    "mysql2": "^2.1.0",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Mark-GeorgeK/Theater-Showtimes.git"
-  },
-  "keywords": [],
-  "bugs": {
-    "url": "https://github.com/Mark-GeorgeK/Theater-Showtimes/issues"
-  },
-  "homepage": "https://github.com/Mark-GeorgeK/Theater-Showtimes#readme"
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "nodemon": "^2.0.3"
+  }
 }
