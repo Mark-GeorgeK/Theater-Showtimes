@@ -30,6 +30,7 @@ let findUserByEmail = (email) => {
                     if (err) {
                         reject(err)
                     }
+                    if(!rows) reject('empty response');
                     let user = rows[0];
                     resolve(user);
                 }
