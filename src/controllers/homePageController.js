@@ -1,11 +1,11 @@
 import { Cinemas } from './getCinemasController';
 
 let handleHomePage = async (req, res) => {
-    const HomePageHTML = getHTMLElements();
+    const HomePageHTML = getHTMLElements(req);
     return res.render('homepage.ejs', { HomePageHTML });
 };
 
-let getHTMLElements = function () {
+let getHTMLElements = function (req) {
     let HomePageHTML = '';
     const header = `<div class="header">
                         <a href="/"><p class="logo">MoviesHub</p></a>
@@ -17,6 +17,9 @@ let getHTMLElements = function () {
                     </div>`;
 
     let cinemaHTML = '';
+    // cinemaHTML += req.user.fullname;
+    // cinemaHTML += Object.keys(req.user).join(", ");
+    // console.log(req.user);
     Cinemas.forEach(cinema => {
         cinemaHTML += '<div class="cinemas">';
         const Cinema = `<div><p class="CinemaName">${cinema.cinemaName}</p></div>`;

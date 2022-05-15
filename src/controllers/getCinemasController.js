@@ -55,7 +55,7 @@ async function getCinema(cinemaName, cinemaURL) {
 async function getCinemas(url) {
     let ERROR = false;
     const response = await axios(url).catch(err => {
-        getCinemas(url);
+        getCinemas(url); //edit to retry if err code is the one for overloaded only
         ERROR = true;
     });
     if (ERROR) return;
@@ -72,7 +72,7 @@ async function getCinemas(url) {
 }
 
 function loadCinemas() {
-    for (let i = 1; i <= 8; i++)
+    for (let i = 1; i <= 10; i++)
         getCinemas(CinemasURL + i);
 }
 
