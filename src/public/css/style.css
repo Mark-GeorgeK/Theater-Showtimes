@@ -54,6 +54,7 @@ li {
 
 .MoviePage {
     padding-bottom: 1em;
+    min-height: 400px;
 }
 
 .MoviePage img {
@@ -62,8 +63,8 @@ li {
 }
 
 .logout-btn {
-    margin-top: 3em;
-    margin-right: 10em;
+    /* margin-top: 3em; */
+    /* margin-right: 10em; */
     border: none;
     color: white;
     background-color: black;
@@ -81,6 +82,16 @@ li {
     background-color: black;
     margin-top: 0px;
     height: 6em;
+}
+
+.header ul{
+    margin-top: 2.5em;
+    margin-right: 5em;
+}
+
+.header li{
+    padding-right: 0;
+    margin-right: 3em;
 }
 
 .logo {

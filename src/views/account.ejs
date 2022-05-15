@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>MoviesHub</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <div class="header">
+        <a href="/">
+            <p class="logo">MoviesHub</p>
+        </a>
+        <div>
+            <ul>
+
+                <li><a href='/search'>Search</a></li>
+                <li><a href='/account'>Account</a></li>
+
+                <% if (req.isAuthenticated()) { %>
+                    <li>
+                        <form method="POST" action="/logout">
+                            <button type="submit" class="logout-btn">Log out</button>
+                        </form>
+                    </li>
+                    <% } else { %>
+                        <li>
+                            <form method="POST" action="/login">
+                                <button type="submit" class="logout-btn">Login</button>
+                            </form>
+                        </li>
+                        <% } %>
+            </ul>
+        </div>
+    </div>
+
+    <% if(req.isAuthenticated()){ %>
+        <p>Loggedin User:</p>
+        <p>Full Name: <%= req.user.fullname %></p>
+        <p>Email: <%= req.user.email %></p>
+    <% } else { %>
+        <p>Not Loggedin.</p>
+    <% } %>
+    
+    <%- HTML %>
+
+    <!-- <div class="footer">
+        <p>This is a footer</p>
+    </div> -->
+</body>
+
+</html>

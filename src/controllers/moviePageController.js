@@ -11,23 +11,34 @@ let handleMovieDetails = async (req, res) => {
             movieDetails = movie;
         }
     }
-    const movieHTML = getMovieHTML(movieDetails);
+    const movieHTML = getMovieHTML(movieDetails, req);
 
     // const { header, cinemaHTML, footer } = getHTMLElements();
     return res.render('movie.ejs', { movieHTML });
 };
 
-const getMovieHTML = data => {
+const getMovieHTML = (data, req) => {
     let movieHTML = '';
     //header
-    const header = `<div class="header">
+    let header = `<div class="header">
                         <a href="/"><p class="logo">MoviesHub</p></a>
-                        <div>
-                            <form method="POST" action="/logout">
-                                <button type="submit" class="logout-btn">Log out</button>
-                            </form>
-                        </div>  
-                    </div>`;
+                        <div><ul>`;
+
+    header += ` <li><a href='/search'>Search</a></li>
+                <li><a href='/account'>Account</a></li>`;
+
+    if (req.isAuthenticated()) {
+        header += `<li><form method="POST" action="/logout">
+                        <button type="submit" class="logout-btn">Log out</button>
+                    </form></li>`;
+    }
+    else {
+        header += `<li><form method="POST" action="/login">
+                        <button type="submit" class="logout-btn">Login</button>
+                    </form></li>`;
+    }
+    header += `     </div>
+                </div>`;
     movieHTML += header;
 
     //data

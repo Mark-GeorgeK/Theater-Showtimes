@@ -43,4 +43,4 @@ initWebRoutes(app);
 
 let port = process.env.PORT || 8080;
 loadCinemas();
-app.listen(port, () => console.log(`Building a login system with NodeJS is running on port ${port}!`));
+app.listen(port, () => console.log(`server running on ${port}!`));

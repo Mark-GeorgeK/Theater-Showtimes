@@ -1,20 +1,31 @@
 import { Cinemas } from './getCinemasController';
 
 let handleHomePage = async (req, res) => {
-    const HomePageHTML = getHTMLElements();
+    const HomePageHTML = getHTMLElements(req);
     return res.render('homepage.ejs', { HomePageHTML });
 };
 
-let getHTMLElements = function () {
+let getHTMLElements = function (req) {
     let HomePageHTML = '';
-    const header = `<div class="header">
+    let header = `<div class="header">
                         <a href="/"><p class="logo">MoviesHub</p></a>
-                        <div>
-                            <form method="POST" action="/logout">
-                                <button type="submit" class="logout-btn">Log out</button>
-                            </form>
-                        </div>  
-                    </div>`;
+                        <div><ul>`;
+
+    header += ` <li><a href='/search'>Search</a></li>
+                <li><a href='/account'>Account</a></li>`;
+
+    if (req.isAuthenticated()) {
+        header += `<li><form method="POST" action="/logout">
+                        <button type="submit" class="logout-btn">Log out</button>
+                    </form></li>`;
+    }
+    else {
+        header += `<li><form method="POST" action="/login">
+                        <button type="submit" class="logout-btn">Login</button>
+                    </form></li>`;
+    }
+    header += `     </div>
+                </div>`;
 
     let cinemaHTML = '';
     // cinemaHTML += req.user.fullname;

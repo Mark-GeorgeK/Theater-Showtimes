@@ -6,6 +6,8 @@ import auth from "../validation/authValidation";
 import passport from "passport";
 import initPassportLocal from "../controllers/passportLocalController";
 import moviePageController from '../controllers/moviePageController';
+import searchController from '../controllers/searchController';
+import HandleAccountPage from '../controllers/accountController';
 
 // Init all passport
 initPassportLocal();
@@ -13,7 +15,7 @@ initPassportLocal();
 let router = express.Router();
 
 let initWebRoutes = (app) => {
-    router.get("/", loginController.checkLoggedIn, homePageController.handleHomePage);
+    router.get("/", homePageController.handleHomePage);
     router.get("/login", loginController.checkLoggedOut, loginController.getPageLogin);
     router.post("/login", passport.authenticate("local", {
         successRedirect: "/",
@@ -24,7 +26,10 @@ let initWebRoutes = (app) => {
     router.get("/register", registerController.getPageRegister);
     router.post("/register", auth.validateRegister, registerController.createNewUser);
     router.post("/logout", loginController.postLogOut);
-    router.get('/:cinemaName/:movieName', moviePageController.handleMovieDetails);
+    router.get('/:cinemaName/:movieName', loginController.checkLoggedIn, moviePageController.handleMovieDetails);
+    router.get('/account', HandleAccountPage);
+    router.get('/search', searchController.HandleSearchPage);
+    router.post('/search', searchController.searchFor);
     return app.use("/", router);
 };
 
