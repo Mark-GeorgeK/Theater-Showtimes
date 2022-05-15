@@ -16,15 +16,6 @@
             <div class="col-7 login-left">
             </div>
             <div class="col-5 mt-2">
-                <div>
-                    <% if(errors != "") { %>
-                        <% errors.forEach((item) => { %>
-                            <div class="alert alert-danger">
-                                <%- item %>
-                            </div>
-                        <% }); %>
-                    <% } %>
-                </div>
                 <form method="POST" action="/register" style="padding-top: 10em;">
                     <div class="form-group">
                         <label for="fullName">Full name:</label>
@@ -41,6 +32,15 @@
                     <div class="form-group">
                         <label for="passwordConfirmation">Confirm password:</label>
                         <input type="password" class="form-control" name="passwordConfirmation" id="passwordConfirmation" placeholder="Password Confirmation" required>
+                    </div>
+                    <div class="error">
+                        <% if(errors != "") { %>
+                            <% errors.forEach((item) => { %>
+                                <div class="alert alert-danger">
+                                    <%- item %>
+                                </div>
+                            <% }); %>
+                        <% } %>
                     </div>
                     <button type="submit" class="btn btn-primary">Register</button>
                 </form>

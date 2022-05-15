@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "babel-node src/server.js"
+    "start": "nodemon --exec babel-node src/server.js"
   },
   "author": "hary pham",
   "license": "ISC",
@@ -23,9 +23,7 @@
     "express-validator": "^6.5.0",
     "mysql2": "^2.1.0",
     "passport": "^0.4.1",
-    "passport-local": "^1.0.0"
-  },
-  "devDependencies": {
+    "passport-local": "^1.0.0",
     "babel-cli": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "nodemon": "^2.0.3"
