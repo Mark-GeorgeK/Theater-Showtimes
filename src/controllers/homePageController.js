@@ -1,11 +1,11 @@
 import { Cinemas } from './getCinemasController';
 
 let handleHomePage = async (req, res) => {
-    const HomePageHTML = getHTMLElements(req);
+    const HomePageHTML = getHTMLElements();
     return res.render('homepage.ejs', { HomePageHTML });
 };
 
-let getHTMLElements = function (req) {
+let getHTMLElements = function () {
     let HomePageHTML = '';
     const header = `<div class="header">
                         <a href="/"><p class="logo">MoviesHub</p></a>
