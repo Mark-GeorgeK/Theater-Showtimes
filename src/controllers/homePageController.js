@@ -44,7 +44,7 @@ let getHTMLElements = function (req) {
     });
 
     //footer
-    const footer = `<div class="footer"><p>This is a footer</p></div>`;
+    const footer = `<div class="footer"><p></p></div>`;
 
     HomePageHTML += header + cinemaHTML + footer;
     return HomePageHTML;

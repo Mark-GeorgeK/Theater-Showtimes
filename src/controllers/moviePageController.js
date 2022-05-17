@@ -71,7 +71,7 @@ const getMovieHTML = (data, req) => {
     movieHTML += html;
 
     //footer
-    const footer = `<div class="footer"><p>This is a footer</p></div>`;
+    const footer = `<div class="footer"><p><p></div>`;
     movieHTML += footer;
     return movieHTML;
 };

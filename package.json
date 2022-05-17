@@ -1,13 +1,13 @@
 {
-  "name": "tutorial-youtube",
+  "name": "movies-hub",
   "version": "1.0.0",
-  "description": "Building a login system with NodeJS",
+  "description": "",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon --exec babel-node src/server.js"
   },
-  "author": "hary pham",
+  "author": "",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.27.2",
