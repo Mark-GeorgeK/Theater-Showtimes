@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Payment</title>
+  <link href="/css/styl.css" rel="stylesheet">
+  
+</head>
+<body>
+    <div class="header">
+        <a href="/">
+            <p class="logo">MoviesHub</p>
+            
+        </a>
+        <h3>Welcome to Movie Payment</h3> 
+      </div>
+    
+    <button data-modal-target="#modal" class="btn">Buy ticket</button>
+  <div class="modal" id="modal">
+    <div class="modal-header">
+      <div class="title">pay</div>
+      <button data-close-button class="close-button">&times;</button>
+    </div>
+    <div class="modal-body">
+        Get your tickets from the tickets booth.
+    </div>
+  </div>
+  <div id="overlay"></div>
+  <script>
+      const openModalButtons = document.querySelectorAll('[data-modal-target]')
+const closeModalButtons = document.querySelectorAll('[data-close-button]')
+const overlay = document.getElementById('overlay')
+
+openModalButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    const modal = document.querySelector(button.dataset.modalTarget)
+    openModal(modal)
+  })
+})
+
+overlay.addEventListener('click', () => {
+  const modals = document.querySelectorAll('.modal.active')
+  modals.forEach(modal => {
+    closeModal(modal)
+  })
+})
+
+closeModalButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    const modal = button.closest('.modal')
+    closeModal(modal)
+  })
+})
+
+function openModal(modal) {
+  if (modal == null) return
+  modal.classList.add('active')
+  overlay.classList.add('active')
+}
+
+function closeModal(modal) {
+  if (modal == null) return
+  modal.classList.remove('active')
+  overlay.classList.remove('active')
+}
+  </script>
+</body>
+</html>

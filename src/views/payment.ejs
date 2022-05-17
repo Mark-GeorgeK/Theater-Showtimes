@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+ 
+<html> 
+<title>payment</title> 
+<body>
+
+    <h3>Welcome to Movie Payment</h3> 
+    
+    <form action="/payment" method="POST"> 
+    <script
+        src="//checkout.stripe.com/v2/checkout.js"
+        class="stripe-button"
+        data-key="<%= key %>" 
+         
+        data-description="pay with card" 
+        data-locale="auto" > </script> 
+    </form> 
+    <style>
+        body{
+    background-image: url("../images/Theater.jpg");
+    background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  
+            color: white;
+            text-align: center;
+            margin: 5%;
+            height: 100vh;
+        }
+        
+        
+
+
+    </style>
+</body> 
+</html>

@@ -8,6 +8,9 @@ import initPassportLocal from "../controllers/passportLocalController";
 import moviePageController from '../controllers/moviePageController';
 import searchController from '../controllers/searchController';
 import HandleAccountPage from '../controllers/accountController';
+import paymenthandle from '../controllers/paymentcontroller';
+import seatshandle from "../controllers/seatscontroller";
+import payhandle from "../controllers/paycontroller";
 
 // Init all passport
 initPassportLocal();
@@ -30,6 +33,10 @@ let initWebRoutes = (app) => {
     router.get('/account', HandleAccountPage);
     router.get('/search', searchController.HandleSearchPage);
     router.post('/search', searchController.searchFor);
+    router.post('/buy', payhandle);
+    router.post('/payment', (req, res) => res.send("Successful payment"));
+    router.post('/pay', paymenthandle);
+    router.post('/seats', seatshandle);
     return app.use("/", router);
 };
 

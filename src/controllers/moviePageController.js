@@ -66,6 +66,11 @@ const getMovieHTML = (data, req) => {
                         ${showtimesHTML}
                     </div>
                 </li>
+                <li>
+                    <form method="POST" action="/seats">
+                        <button type="submit" class="btn btn-primary">seats</button>
+                    </form>
+                </li>
             </ul>
         </div>`;
     movieHTML += html;
