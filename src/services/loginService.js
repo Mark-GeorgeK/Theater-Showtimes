@@ -30,7 +30,6 @@ let findUserByEmail = (email) => {
                     if (err) {
                         reject(err)
                     }
-                    console.log(rows); //debugging
                     if(!rows) reject('empty response');
                     let user = rows[0];
                     resolve(user);
@@ -51,7 +50,6 @@ let findUserById = (id) => {
                     if (err) {
                         reject(err)
                     }
-                    console.log(rows); //debugging
                     let user = rows[0];
                     resolve(user);
                 }
