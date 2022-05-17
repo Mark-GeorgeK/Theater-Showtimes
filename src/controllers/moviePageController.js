@@ -68,7 +68,7 @@ const getMovieHTML = (data, req) => {
                 </li>
                 <li>
                     <form method="POST" action="/seats">
-                        <button type="submit" class="btn btn-primary">seats</button>
+                        <button type="submit" class="dropbtn">seats</button>
                     </form>
                 </li>
             </ul>
